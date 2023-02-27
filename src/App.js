@@ -7,8 +7,12 @@ import {
   SelectedFilters,
 } from "@appbaseio/reactivesearch";
 import Navbar from "./Navbar";
+import { useState } from "react";
+import TagSelector from "./TagSelector";
 
 function App() {
+  const [options, setOptions] = useState([]);
+
   return (
     <ReactiveBase
       endpoint={{
@@ -21,16 +25,21 @@ function App() {
       }}
       transformRequest={(req) => {
         const body = JSON.parse(req.body);
-        body.customData = ["Harry Potter"];
+        body.customData = options;
         const newReq = { ...req, body: JSON.stringify(body) };
         return newReq;
       }}
     >
       <Navbar />
-      <div className="row">
-        <div className="col">
+      <div className="p-3">
+        <div className="row">
+          <div className="col-4">User Preference:</div>
+          <div className="col">
+            <TagSelector options={options} setOptions={setOptions} />
+          </div>
+        </div>
+        <div className="row mt-4">
           <SearchBox
-            title="SearchBox"
             dataField={["original_title", "original_title.search"]}
             componentId="BookSensor"
             highlight
@@ -58,9 +67,7 @@ function App() {
             }}
             renderNoSuggestion="No suggestions found."
           />
-        </div>
 
-        <div className="col">
           <SelectedFilters />
           <ReactiveList
             componentId="SearchResult"
