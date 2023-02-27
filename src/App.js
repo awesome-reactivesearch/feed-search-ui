@@ -6,6 +6,7 @@ import {
   SearchBox,
   SelectedFilters,
 } from "@appbaseio/reactivesearch";
+import Navbar from "./Navbar";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
         return newReq;
       }}
     >
+      <Navbar />
       <div className="row">
         <div className="col">
           <SearchBox
