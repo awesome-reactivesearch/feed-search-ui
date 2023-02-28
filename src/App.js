@@ -13,7 +13,7 @@ import TagSelector from "./TagSelector";
 import styles from "./App.module.css";
 
 function App() {
-  const [options, setOptions] = useState(["Harry Potter"]);
+  const [options, setOptions] = useState(["Comedy"]);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
