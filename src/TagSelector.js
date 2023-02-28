@@ -27,10 +27,12 @@ export default function TagSelector({ options, setOptions }) {
           aria-label="Default select example"
         >
           <option value="1">Select an option</option>
-          <option value="Harry Potter">Harry Potter</option>
-          <option value="Lord of the Rings">Lord of the Rings</option>
-          <option value="Moby Dick">Moby Dick</option>
-          <option value="Hunger Games">Hunger Games</option>
+          <option value="Horror">Horror</option>
+          <option value="Thriller">Thriller</option>
+          <option value="Comedy">Comedy</option>
+          <option value="Family">Family</option>
+          <option value="Documentary">Documentary</option>
+          <option value="History">History</option>
         </select>
       </div>
     </div>

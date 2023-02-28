@@ -57,7 +57,7 @@ function App() {
         >
           <div className="row mt-4 p-3">
             <SearchBox
-              dataField={["original_title", "original_title.search"]}
+              dataField={["original_title"]}
               componentId="BookSensor"
               highlight
               URLParams
@@ -100,7 +100,9 @@ function App() {
                   <ReactiveList.ResultCardsWrapper>
                     {data.map((item) => (
                       <ResultCard id={item._id} key={item._id}>
-                        <ResultCard.Image src={item.image} />
+                        <ResultCard.Image
+                          src={`https://image.tmdb.org/t/p/w500/${item.poster_path}`}
+                        />
                         <ResultCard.Title>
                           <div
                             className="book-title"
@@ -113,26 +115,10 @@ function App() {
                         <ResultCard.Description>
                           <div className="flex column justify-space-between">
                             <div>
-                              <div>
-                                by{" "}
-                                <span className="authors-list">
-                                  {item.authors}
-                                </span>
-                              </div>
                               <div className="ratings-list flex align-center">
                                 <span className="stars">
-                                  {
-                                    /* eslint-disable */
-                                    Array(item.average_rating_rounded)
-                                      .fill("x")
-                                      .map((_, index) => (
-                                        <i
-                                          className="fas fa-star"
-                                          key={index}
-                                        />
-                                      ))
-                                    /* eslint-enable */
-                                  }
+                                  <i className="fas fa-star" />
+                                  {item.vote_average}
                                 </span>
                                 <span className="avg-rating">
                                   ({item.average_rating} avg)
@@ -140,7 +126,7 @@ function App() {
                               </div>
                             </div>
                             <span className="pub-year">
-                              Pub {item.original_publication_year}
+                              {item.release_year}
                             </span>
                           </div>
                         </ResultCard.Description>
