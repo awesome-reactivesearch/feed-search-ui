@@ -61,28 +61,10 @@ function App() {
               componentId="BookSensor"
               highlight
               URLParams
-              enablePopularSuggestions
-              popularSuggestionsConfig={{
-                size: 3,
-                minChars: 2,
-              }}
-              enableRecentSuggestions
-              recentSuggestionsConfig={{
-                size: 3,
-                minChars: 4,
-              }}
               size={5}
               enablePredictiveSuggestions
-              onData={(props) => {
-                // eslint-disable-next-line
-                console.log(props);
-              }}
               showClear
-              onValueSelected={(value, cause) => {
-                // eslint-disable-next-line
-                console.log(value, cause);
-              }}
-              renderNoSuggestion="No suggestions found."
+              renderNoSuggestion={() => "No suggestions found."}
             />
 
             <SelectedFilters />
@@ -115,6 +97,7 @@ function App() {
                         <ResultCard.Description>
                           <div className="flex column justify-space-between">
                             <div>
+                              <div>{item.genres_data}</div>
                               <div className="ratings-list flex align-center">
                                 <span className="stars">
                                   <i className="fas fa-star" />
