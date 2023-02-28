@@ -1,0 +1,6 @@
+.userPreference {
+  max-width: max-content;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
