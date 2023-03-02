@@ -71,7 +71,7 @@ function App() {
             <ReactiveList
               componentId="SearchResult"
               dataField="original_title"
-              size={10}
+              size={12}
               className="result-list-container"
               pagination
               react={{
