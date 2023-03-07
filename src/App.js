@@ -97,7 +97,7 @@ function App() {
                         <ResultCard.Description>
                           <div className="flex column justify-space-between">
                             <div>
-                              <div>{item.genres_data}</div>
+                              <div>{item.genres && item.genres.join(", ")}</div>
                               <div className="ratings-list flex align-center">
                                 <span className="stars">
                                   <i className="fas fa-star" />
