@@ -28,102 +28,88 @@ function App() {
   return (
     <>
       <Navbar />
-      <div className="p-3">
-        <div className="row">
-          <div className={styles.userPreference}>User Preference:</div>
-          <div className="col">
-            <TagSelector options={options} setOptions={setOptions} />
-          </div>
-        </div>
-      </div>
-      {isLoading ? (
-        <div className="row mt-4 p-3">Resetting topics...</div>
-      ) : (
-        <ReactiveBase
-          endpoint={{
-            url: "https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@appbase-demo-ansible-abxiydt-arc.searchbase.io/query-rules-boost",
-            method: "POST",
-          }}
-          reactivesearchAPIConfig={{
-            recordAnalytics: false,
-            userId: "jon",
-          }}
-          transformRequest={(req) => {
-            const body = JSON.parse(req.body);
-            body.customData = options;
-            const newReq = { ...req, body: JSON.stringify(body) };
-            return newReq;
-          }}
-        >
-          <div className="row mt-4 p-3">
-            <SearchBox
-              dataField={["original_title"]}
-              componentId="BookSensor"
-              highlight
-              URLParams
-              size={5}
-              enablePredictiveSuggestions
-              showClear
-              renderNoSuggestion={() => "No suggestions found."}
-            />
+      <ReactiveBase
+        endpoint={{
+          url: "https://a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61@appbase-demo-ansible-abxiydt-arc.searchbase.io/query-rules-boost-static",
+          method: "POST",
+        }}
+        reactivesearchAPIConfig={{
+          recordAnalytics: false,
+          userId: "jon",
+        }}
+        transformRequest={(req) => {
+          const body = JSON.parse(req.body);
+          body.customData = options;
+          const newReq = { ...req, body: JSON.stringify(body) };
+          return newReq;
+        }}
+      >
+        <div className="row mt-4 p-3">
+          <SearchBox
+            dataField={["original_title"]}
+            componentId="BookSensor"
+            highlight
+            URLParams
+            size={5}
+            enablePredictiveSuggestions
+            showClear
+            renderNoSuggestion={() => "No suggestions found."}
+          />
 
-            <SelectedFilters />
-            <ReactiveList
-              componentId="SearchResult"
-              dataField="original_title"
-              size={12}
-              className="result-list-container"
-              pagination
-              react={{
-                and: "BookSensor",
-              }}
-              render={({ data }) =>
-                data && data.length ? (
-                  <ReactiveList.ResultCardsWrapper>
-                    {data.map((item) => (
-                      <ResultCard id={item._id} key={item._id}>
-                        <ResultCard.Image
-                          src={`https://image.tmdb.org/t/p/w500/${item.poster_path}`}
+          <SelectedFilters />
+          <ReactiveList
+            componentId="SearchResult"
+            dataField="original_title"
+            size={12}
+            className="result-list-container"
+            pagination
+            react={{
+              and: "BookSensor",
+            }}
+            render={({ data }) =>
+              data && data.length ? (
+                <ReactiveList.ResultCardsWrapper>
+                  {data.map((item) => (
+                    <ResultCard id={item._id} key={item._id}>
+                      <ResultCard.Image
+                        src={`https://image.tmdb.org/t/p/w500/${item.poster_path}`}
+                      />
+                      <ResultCard.Title>
+                        <div
+                          className="book-title"
+                          dangerouslySetInnerHTML={{
+                            __html: item.original_title,
+                          }}
                         />
-                        <ResultCard.Title>
-                          <div
-                            className="book-title"
-                            dangerouslySetInnerHTML={{
-                              __html: item.original_title,
-                            }}
-                          />
-                        </ResultCard.Title>
+                      </ResultCard.Title>
 
-                        <ResultCard.Description>
-                          <div className="flex column justify-space-between">
-                            <div>
-                              <div>{item.genres && item.genres.join(", ")}</div>
-                              <div className="ratings-list flex align-center">
-                                <span className="stars">
-                                  <i className="fas fa-star" />
-                                  {item.vote_average}
-                                </span>
-                                <span className="avg-rating">
-                                  ({item.average_rating} avg)
-                                </span>
-                              </div>
+                      <ResultCard.Description>
+                        <div className="flex column justify-space-between">
+                          <div>
+                            <div>{item.genres && item.genres.join(", ")}</div>
+                            <div className="ratings-list flex align-center">
+                              <span className="stars">
+                                <i className="fas fa-star" />
+                                {item.vote_average}
+                              </span>
+                              <span className="avg-rating">
+                                ({item.average_rating} avg)
+                              </span>
                             </div>
-                            <span className="pub-year">
-                              {item.release_year}
-                            </span>
                           </div>
-                        </ResultCard.Description>
-                      </ResultCard>
-                    ))}
-                  </ReactiveList.ResultCardsWrapper>
-                ) : (
-                  "Loading Results..."
-                )
-              }
-            />
-          </div>
-        </ReactiveBase>
-      )}
+                          <span className="pub-year">{item.release_year}</span>
+                        </div>
+                      </ResultCard.Description>
+                    </ResultCard>
+                  ))}
+                </ReactiveList.ResultCardsWrapper>
+              ) : (
+                "Loading Results..."
+              )
+            }
+          />
+        </div>
+      </ReactiveBase>
     </>
   );
 }
