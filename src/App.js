@@ -7,24 +7,8 @@ import {
   SelectedFilters,
 } from "@appbaseio/reactivesearch";
 import Navbar from "./Navbar";
-import { useEffect, useState } from "react";
-import TagSelector from "./TagSelector";
-
-import styles from "./App.module.css";
 
 function App() {
-  const [options, setOptions] = useState(["Comedy"]);
-  const [isLoading, setIsLoading] = useState(false);
-
-  useEffect(() => {
-    if (options) {
-      setIsLoading(true);
-      setTimeout(() => {
-        setIsLoading(false);
-      }, 1000);
-    }
-  }, [options]);
-
   return (
     <>
       <Navbar />
@@ -35,13 +19,6 @@ function App() {
         }}
         reactivesearchAPIConfig={{
           recordAnalytics: false,
-          userId: "jon",
-        }}
-        transformRequest={(req) => {
-          const body = JSON.parse(req.body);
-          body.customData = options;
-          const newReq = { ...req, body: JSON.stringify(body) };
-          return newReq;
         }}
       >
         <div className="row mt-4 p-3">
